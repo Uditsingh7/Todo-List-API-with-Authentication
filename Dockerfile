@@ -1,4 +1,4 @@
-# Use the official Node.js image as a base image
+# Node.js image 
 FROM node:17
 
 # Set the working directory

@@ -1,6 +1,8 @@
-const zod = require("zod");
+const zod = require("zod"); // importing zod middleware for validating input
 const Todo = require("../models/ToDo");
 
+
+// create todo req body  validation schema using Zod
 const todoInputSchema = zod.object({
     title: zod.string().min(1).max(255),
     description: zod.string(),
@@ -9,6 +11,7 @@ const todoInputSchema = zod.object({
     status: zod.enum(['pending', 'completed']).optional(),
 });
 
+// get todo query  validation schema using Zod
 const todoListQuerySchema = zod.object({
     page: zod.number().min(1).optional(),
     limit: zod.number().min(1).max(100).optional(),
@@ -16,10 +19,11 @@ const todoListQuerySchema = zod.object({
     order: zod.enum(['asc', 'desc']).optional(),
 });
 
+// update todo req body  validation schema using Zod
 const todoUpdateSchema = zod.object({
     title: zod.string().min(1).max(255).optional(),
     description: zod.string().optional(),
-    dueDate: zod.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(), // Validate as string in YYYY-MM-DD format
+    dueDate: zod.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(), 
     priority: zod.enum(['low', 'medium', 'high']).optional(),
     status: zod.enum(['pending', 'completed']).optional(),
 }).partial();
@@ -27,7 +31,10 @@ const todoUpdateSchema = zod.object({
 // Create a new todo 
 const createTodo = async (req, res) => {
     try {
+        // check for zod validation  error 
         const { success, error } = todoInputSchema.safeParse(req.body);
+
+        //and throw if there is one
         if (!success) {
             return res.status(400).json({
                 success: false,
@@ -35,12 +42,12 @@ const createTodo = async (req, res) => {
                 errors: error.formErrors.fieldErrors,
             });
         }
-
+        // If all fine with validation, will create the todo task
         const todo = await Todo.create({
             ...req.body,
             user: req.user.id,
         });
-
+        // response
         res.status(201).json({
             success: true,
             message: "Todo created successfully",
@@ -59,8 +66,10 @@ const createTodo = async (req, res) => {
 // Get all todos specific to a user
 const getTodos = async (req, res) => {
     try {
-        console.log("userid: ", req.user.id);
+        // check for zod validation  error 
         const { success, error } = todoListQuerySchema.safeParse(req.query);
+
+        // and throw errorif there are any one
         if (!success) {
             return res.status(400).json({
                 success: false,
@@ -78,9 +87,11 @@ const getTodos = async (req, res) => {
         const sortField = req.query.sort || 'createdAt';
         const sortOrder = req.query.order === 'desc' ? -1 : 1;
 
+        // find the todo tasks for the user
         const todos = await Todo.find({ user: req.user.id }).
             skip(skip).limit(limit).sort({ [sortField]: sortOrder });
 
+        // Get all counts 
         const totalTodoCount = await Todo.countDocuments({ user: req.user.id });
 
         res.status(200).json({

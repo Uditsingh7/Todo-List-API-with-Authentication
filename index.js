@@ -17,13 +17,18 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal Server Error' });
 });
 
+// define route for our routers
 app.use('/api/v1', router);
 
+
+// listen to the server
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDb();
 });
 
+
+// health check up route
 app.get("/", (req, res) => {
     res.end("<h1>Welcome to the Task Wand APIs</h1><p>This is a simple NodeJS RESTful API using Express and MongoDB.</p>")
 })
@@ -39,4 +44,5 @@ const gracefulShutdown = () => {
 process.on('SIGINT', gracefulShutdown);
 process.on('SIGTERM', gracefulShutdown);
 
-module.exports = server;  // Export the server instance
+// Export the server instance
+module.exports = server;  

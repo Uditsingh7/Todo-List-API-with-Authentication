@@ -53,7 +53,7 @@ userSchema.virtual('fullName').get(function () {
 
 // This is a pre-defined middleware for userSchema. 
 // This middleware will be executed before save() operation is
-// performed on any document using this schema.
+// performd on any document using this schema.
 userSchema.pre('save', async function (next) {
     if (this.isModified('password')) {
         const salt = await bcrypt.genSalt(10);

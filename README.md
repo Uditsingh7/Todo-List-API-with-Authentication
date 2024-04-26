@@ -27,7 +27,10 @@ Before diving into the arcane world, ensure you possess the following artifacts:
 - Node.js
 - Docker
 - Git
+- 
+### 📚 Swagger Grimoire Documentation
 
+Explore the magic of our API through the [Swagger Grimoire](https://todo-wand-api-fbe7cc6946ca.herokuapp.com/docs). Here, you'll find detailed documentation on how to wield the enchantments provided by our API, allowing you to conjure powerful spells with ease.
 ### 🌀 Spellcasting Instructions
 
 1. **Summon the Repository**:
@@ -90,10 +93,6 @@ Invoke the tests:
 npm test
 ```
 
-### 📖 The Swagger Grimoire documentation
-
-Access the interactive spellbook at `http://localhost:3001/api-docs`.
-
 ## 🚀 The Celestial Deployment
 
 The live enchantment is deployed on Heroku and can be accessed at [Heroku Enchantment](https://todo-wand-api-fbe7cc6946ca.herokuapp.com/).
@@ -101,3 +100,7 @@ The live enchantment is deployed on Heroku and can be accessed at [Heroku Enchan
 ## 🧙‍♂️ Conjurers' Circle
 
 We welcome fellow conjurers to contribute!
+
+---
+
+By following these instructions, you'll unlock the secrets of our ToDo Tasking Sorcery and harness its power for your own magical endeavors!

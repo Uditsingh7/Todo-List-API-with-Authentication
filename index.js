@@ -1,8 +1,10 @@
 const express = require("express");
-const { router } = require('./src/routes/index');
+const router = require('./src/routes/index');
 const cors = require("cors");
 const mongoose = require('mongoose');
 const { connectDb } = require("./db");
+const swaggerDocs = require('./swagger');
+
 
 
 const app = express();
@@ -10,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(cors());
+app.disable('x-powered-by'); // less hackers know about our stack
 
 // Middleware for error handling
 app.use((err, req, res, next) => {
@@ -21,10 +24,13 @@ app.use((err, req, res, next) => {
 app.use('/api/v1', router);
 
 
+
 // listen to the server
 const server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connectDb();
+    swaggerDocs(app, PORT)
+
 });
 
 

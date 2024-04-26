@@ -8,6 +8,7 @@ let mongoServer;
 
 async function connectDb() {
     try {
+        // use in memory mongo memeory server and env as test
         if (process.env.NODE_ENV === 'test') {
             mongoServer = await MongoMemoryServer.create();
             const uri = mongoServer.getUri();

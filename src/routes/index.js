@@ -13,4 +13,4 @@ router.use("/todos", verifyToken, todoRouter);
 
 
 
-module.exports = { router };
+module.exports = router;
